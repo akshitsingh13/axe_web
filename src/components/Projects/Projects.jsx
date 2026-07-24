@@ -130,6 +130,7 @@ const Projects = () => {
       ctx.revert();
     };
   }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -148,10 +149,6 @@ const Projects = () => {
       <div ref={gridRef} className="projects-grid">
         {projects.map((project, index) => (
           <article className="project-card" key={`${project.id}-${index}`}>
-            <div className="project-image">
-              <img src={project.imgSrc} alt={`${project.title} preview`} />
-            </div>
-
             <div className="project-content">
               <div className="project-number">
                 {String(index + 1).padStart(2, "0")}
