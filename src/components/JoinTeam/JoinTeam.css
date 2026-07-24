@@ -1,0 +1,99 @@
+/* src/components/JoinTeam/JoinTeam.css */
+
+.section-05 {
+  position: relative;
+
+  width: 100%;
+
+  padding: 72px 128px 88px;
+
+  background: #0d2b06;
+
+  border-top: 1px solid rgba(57, 255, 20, 0.2);
+  border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+}
+
+.join-label {
+  margin-bottom: 28px;
+
+  color: var(--accent);
+
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+
+  letter-spacing: 0.15em;
+}
+
+.join-content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.join-content h2 {
+  margin: 0;
+
+  color: #e8e8e3;
+
+  font-family: var(--font-mono);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 700;
+  line-height: 0.98;
+
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.join-content p {
+  max-width: 650px;
+
+  margin: 28px 0 0;
+
+  color: #b6b6b0;
+
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.join-button {
+  flex-shrink: 0;
+
+  padding: 16px 24px;
+
+  background: var(--accent);
+  color: #000000;
+
+  border: 1px solid var(--accent);
+
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.join-button:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+.join-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .section-05 {
+    padding: 56px 24px 64px;
+  }
+
+  .join-content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

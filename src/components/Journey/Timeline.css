@@ -1,0 +1,55 @@
+/* src/components/Journey/Timeline.css */
+
+.timeline {
+  position: relative;
+
+  width: 100%;
+}
+
+.timeline-events {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  padding: 20px 0 80px;
+}
+
+.timeline-base-line,
+.timeline-progress-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+
+  width: 2px;
+
+  transform: translateX(-50%);
+}
+
+.timeline-base-line {
+  background: #252525;
+}
+
+.timeline-progress-line {
+  z-index: 1;
+
+  background: var(--accent);
+
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+@media (max-width: 750px) {
+  .timeline-base-line,
+  .timeline-progress-line {
+    left: 8px;
+
+    transform: none;
+  }
+
+  .timeline-events {
+    padding-bottom: 40px;
+  }
+}

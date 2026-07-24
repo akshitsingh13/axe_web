@@ -1,0 +1,140 @@
+/* src/components/Achievements/Achievements.css */
+
+.section-03 {
+  position: relative;
+
+  width: 100%;
+  padding: 64px 128px 80px;
+
+  background: var(--bg);
+}
+
+.section-03::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 128px;
+  right: 128px;
+
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.achievements-title {
+  display: grid;
+  gap: 8px;
+
+  margin-bottom: 40px;
+}
+
+.achievements-heading {
+  margin: 0;
+
+  color: #e8e8e3;
+
+  font-family: var(--font-mono);
+  font-size: 44px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  border: 1px solid #252525;
+}
+
+.achievement-card {
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 28px;
+
+  background: #101010;
+
+  border-right: 1px solid #252525;
+}
+
+.achievement-card:last-child {
+  border-right: none;
+}
+
+.achievement-value {
+  color: var(--accent);
+
+  font-family: var(--font-mono);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.achievement-label {
+  margin-top: 14px;
+
+  color: #a3a39d;
+
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .section-03 {
+    padding: 48px 24px 56px;
+  }
+
+  .section-03::before {
+    left: 24px;
+    right: 24px;
+  }
+
+  .achievements-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .achievement-card:nth-child(2) {
+    border-right: none;
+  }
+
+  .achievement-card:nth-child(-n + 2) {
+    border-bottom: 1px solid #252525;
+  }
+
+  .achievements-heading {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 520px) {
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .achievement-card {
+    min-height: 150px;
+
+    border-right: none;
+    border-bottom: 1px solid #252525;
+  }
+
+  .achievement-card:nth-child(2) {
+    border-right: none;
+  }
+
+  .achievement-card:last-child {
+    border-bottom: none;
+  }
+
+  .achievements-heading {
+    font-size: 30px;
+  }
+}

@@ -1,0 +1,287 @@
+/* src/components/TeamMembers/Teammembermodal.css */
+
+.member-modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  z-index: 5000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.member-modal {
+  position: relative;
+
+  width: min(900px, 100%);
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #0d0d0d;
+
+  border: 1px solid #303030;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+}
+
+.member-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+
+  z-index: 2;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #151515;
+  color: #e8e8e3;
+
+  border: 1px solid #303030;
+
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+
+  cursor: pointer;
+}
+
+.member-modal-close:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.member-modal-header {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+
+  border-bottom: 1px solid #252525;
+}
+
+.member-modal-photo {
+  min-height: 340px;
+
+  background: #161616;
+}
+
+.member-modal-photo img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.member-modal-intro {
+  padding: 42px;
+}
+
+.member-modal-label {
+  margin-bottom: 12px;
+
+  color: var(--accent);
+
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+
+  letter-spacing: 0.15em;
+}
+
+.member-modal-intro h2 {
+  margin: 0 0 6px;
+
+  color: #e8e8e3;
+
+  font-family: var(--font-mono);
+  font-size: 2rem;
+
+  text-transform: uppercase;
+}
+
+.member-modal-role {
+  color: var(--accent);
+
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+
+  text-transform: uppercase;
+}
+
+.member-modal-intro p {
+  margin: 24px 0;
+
+  color: #a3a39d;
+
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.member-resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.member-modal-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 14px;
+
+  border: 1px solid var(--accent);
+
+  color: var(--accent);
+
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+
+  text-transform: uppercase;
+}
+
+.member-modal-action:hover {
+  background: var(--accent);
+  color: #000000;
+}
+
+.member-modal-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.member-modal-section {
+  padding: 28px;
+
+  border-right: 1px solid #252525;
+}
+
+.member-modal-section:last-child {
+  border-right: none;
+}
+
+.member-modal-section h3 {
+  margin: 0 0 18px;
+
+  color: var(--accent);
+
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.member-contributions {
+  display: grid;
+  gap: 12px;
+}
+
+.member-contributions li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+
+  color: #a3a39d;
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.member-contributions span {
+  color: var(--accent);
+
+  font-family: var(--font-mono);
+}
+
+.member-work-links {
+  display: grid;
+  gap: 12px;
+}
+
+.member-work-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  color: #d9d9d9;
+
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.member-work-links a:hover {
+  color: var(--accent);
+}
+
+.member-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.member-socials a {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #303030;
+
+  color: #d9d9d9;
+}
+
+.member-socials a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+@media (max-width: 750px) {
+  .member-modal-header {
+    grid-template-columns: 1fr;
+  }
+
+  .member-modal-photo {
+    height: 300px;
+    min-height: 0;
+  }
+
+  .member-modal-content {
+    grid-template-columns: 1fr;
+  }
+
+  .member-modal-section {
+    border-right: none;
+    border-bottom: 1px solid #252525;
+  }
+
+  .member-modal-section:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .member-modal-backdrop {
+    padding: 12px;
+  }
+
+  .member-modal-intro {
+    padding: 28px 20px;
+  }
+
+  .member-modal-intro h2 {
+    font-size: 1.5rem;
+  }
+}

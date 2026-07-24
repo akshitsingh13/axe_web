@@ -1,0 +1,62 @@
+/* src/components/Header/Header.css */
+
+.main-header {
+  height: 80px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  background: var(--bg);
+}
+
+.team-text {
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+
+  letter-spacing: -0.03em;
+}
+
+.axe-logo {
+  display: block;
+
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+}
+
+/*
+  The original SVG paths use fill="black".
+  We override them here so the logo uses the site's
+  neon-green accent without modifying its geometry.
+*/
+.axe-logo path {
+  fill: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .main-header {
+    height: 72px;
+  }
+
+  .team-text {
+    font-size: 1.7rem;
+  }
+
+  .axe-logo {
+    width: 42px;
+    height: 42px;
+  }
+}
