@@ -6,6 +6,7 @@ import useSectionReveal from "../../hooks/useSectionReveal.js";
 import teamNames from "../../data/teamNames.js";
 import teamDetail from "../../data/teamDetail.js";
 
+import TeamNav from "./TeamNav.jsx";
 import Teammembermodal from "./Teammembermodal.jsx";
 
 import "./TeamMembers.css";
@@ -13,15 +14,22 @@ import "./TeamMembers.css";
 const TeamMembers = () => {
   const sectionRef = useRef(null);
 
-  useSectionReveal(
-    sectionRef,
-    ".team-title, .team-group-heading, .team-member-card",
-    {
-      y: 34,
-      stagger: 0.07,
-    },
+  const [activeTeamId, setActiveTeamId] = useState(
+    teamNames.length > 0 ? teamNames[0].id : "",
   );
+
   const [selectedMember, setSelectedMember] = useState(null);
+
+  useSectionReveal(sectionRef, ".team-title, .team-nav-wrap", {
+    y: 34,
+    stagger: 0.07,
+  });
+
+  const activeTeam = teamNames.find((team) => team.id === activeTeamId);
+
+  const activeMembers = teamDetail.filter((member) =>
+    member.team.includes(activeTeamId),
+  );
 
   return (
     <>
@@ -39,51 +47,52 @@ const TeamMembers = () => {
           </h2>
         </div>
 
-        <div className="team-groups">
-          {teamNames.map((team) => {
-            const members = teamDetail.filter((member) =>
-              member.team.includes(team.id),
-            );
+        <div className="team-nav-wrap">
+          <TeamNav activeId={activeTeamId} onSelect={setActiveTeamId} />
+        </div>
 
-            return (
-              <div className="team-group" key={team.id}>
-                <div className="team-group-heading">
-                  <span className="team-group-id">{team.id}</span>
+        <div className="team-active-group">
+          {activeTeam && (
+            <div className="team-group-heading">
+              <span className="team-group-id">{activeTeam.id}</span>
 
-                  <h3>{team.name}</h3>
-                </div>
+              <h3>{activeTeam.name}</h3>
+            </div>
+          )}
 
-                {members.length > 0 ? (
-                  <div className="team-grid">
-                    {members.map((member) => (
-                      <button
-                        type="button"
-                        className="team-member-card"
-                        key={member.id}
-                        onClick={() => setSelectedMember(member)}
-                      >
-                        <div className="team-member-image">
-                          <img src={member.photoPath} alt={member.name} />
-                        </div>
-
-                        <div className="team-member-info">
-                          <h4>{member.name}</h4>
-
-                          <span>{member.role}</span>
-
-                          <p>{member.shortDescription}</p>
-
-                          <div className="team-member-open">View Profile →</div>
-                        </div>
-                      </button>
-                    ))}
+          {activeMembers.length > 0 ? (
+            <div
+              className="team-scroll-row"
+              key={activeTeamId}
+              aria-label={`${activeTeam?.name ?? "Team"} members`}
+            >
+              {activeMembers.map((member) => (
+                <button
+                  type="button"
+                  className="team-member-card"
+                  key={member.id}
+                  onClick={() => setSelectedMember(member)}
+                  aria-label={`View ${member.name}'s profile`}
+                >
+                  <div className="team-member-image">
+                    <img src={member.photoPath} alt={member.name} />
                   </div>
-                ) : (
-                  <p className="team-empty">More members coming soon.</p>
-                )}
-              </div>
-            );
-          })}
+
+                  <div className="team-member-info">
+                    <h4>{member.name}</h4>
+
+                    <span>{member.role}</span>
+
+                    <p>{member.shortDescription}</p>
+
+                    <div className="team-member-open">View Profile →</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <p className="team-empty">More members coming soon.</p>
+          )}
         </div>
       </section>
 
