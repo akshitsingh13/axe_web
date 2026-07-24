@@ -2,15 +2,13 @@
 
 import {
   useCallback,
-  useEffect,
   useLayoutEffect,
+  useEffect,
   useRef,
   useState,
 } from "react";
-
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import sihPhoto1 from "../../assets/timeline/sih-photo-1.jpeg";
 
 import "./HighlightsPanel.css";
@@ -43,45 +41,42 @@ const PANELS = [
 const CYCLE_MS = 4000;
 
 const HighlightsPanel = () => {
-  // -----------------------------
-  // Carousel state
-  // -----------------------------
-
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  // -----------------------------
-  // Refs
-  // -----------------------------
-
   const highlightsRef = useRef(null);
-
-  const rafRef = useRef(null);
-  const startRef = useRef(null);
-  const elapsedRef = useRef(0);
-
-  // -----------------------------
-  // GSAP: Pin Highlights section
-  // -----------------------------
+  const imageRef = useRef(null);
 
   useLayoutEffect(() => {
     const section = highlightsRef.current;
+    const image = imageRef.current;
 
-    if (!section) {
-      return undefined;
-    }
+    if (!section || !image) return undefined;
 
     const ctx = gsap.context(() => {
+      gsap.fromTo(
+        image,
+        {
+          scale: 1.06,
+          yPercent: -3,
+        },
+        {
+          scale: 1.14,
+          yPercent: 6,
+          ease: "none",
+
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "+=55%",
+            scrub: 0.6,
+          },
+        },
+      );
+
       ScrollTrigger.create({
         trigger: section,
-
         start: "top top",
         end: "+=35%",
-
         pin: true,
         pinSpacing: true,
-
         anticipatePin: 1,
       });
     }, highlightsRef);
@@ -91,71 +86,13 @@ const HighlightsPanel = () => {
     };
   }, []);
 
-  // -----------------------------
-  // GSAP: Active image parallax
-  // -----------------------------
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  useLayoutEffect(() => {
-    const section = highlightsRef.current;
-
-    if (!section) {
-      return undefined;
-    }
-
-    const ctx = gsap.context(() => {
-      const activeImage = section.querySelector(".slide.is-active img");
-
-      if (!activeImage) {
-        return;
-      }
-
-      gsap.fromTo(
-        activeImage,
-        {
-          scale: 1.06,
-          yPercent: -3,
-        },
-        {
-          scale: 1.14,
-          yPercent: 6,
-
-          ease: "none",
-
-          scrollTrigger: {
-            trigger: section,
-
-            start: "top top",
-            end: "+=55%",
-
-            scrub: 0.6,
-          },
-        },
-      );
-    }, highlightsRef);
-
-    return () => {
-      ctx.revert();
-    };
-  }, [activeIndex]);
-
-  // -----------------------------
-  // Refresh ScrollTrigger whenever
-  // the active carousel slide changes
-  // -----------------------------
-
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-    });
-
-    return () => {
-      cancelAnimationFrame(frame);
-    };
-  }, [activeIndex]);
-
-  // -----------------------------
-  // Carousel navigation
-  // -----------------------------
+  const rafRef = useRef(null);
+  const startRef = useRef(null);
+  const elapsedRef = useRef(0);
 
   const goTo = useCallback((index) => {
     setActiveIndex(((index % PANELS.length) + PANELS.length) % PANELS.length);
@@ -169,10 +106,6 @@ const HighlightsPanel = () => {
   const advance = useCallback(() => {
     goTo(activeIndex + 1);
   }, [activeIndex, goTo]);
-
-  // -----------------------------
-  // Auto-advance + progress
-  // -----------------------------
 
   useEffect(() => {
     if (isPaused) {
@@ -211,10 +144,6 @@ const HighlightsPanel = () => {
     };
   }, [isPaused, activeIndex, advance]);
 
-  // -----------------------------
-  // Keyboard navigation
-  // -----------------------------
-
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "ArrowRight") {
@@ -233,13 +162,8 @@ const HighlightsPanel = () => {
     };
   }, [activeIndex, goTo]);
 
-  // -----------------------------
-  // Calculate carousel position
-  // -----------------------------
-
   const getOffset = (index) => {
     let difference = index - activeIndex;
-
     const halfwayPoint = PANELS.length / 2;
 
     if (difference > halfwayPoint) {
@@ -272,9 +196,7 @@ const HighlightsPanel = () => {
       <div className="slideshow-stage">
         {PANELS.map((panel, index) => {
           const offset = getOffset(index);
-
           const isActive = offset === 0;
-
           const isVisible = Math.abs(offset) <= 2;
 
           if (!isVisible) {
@@ -286,15 +208,13 @@ const HighlightsPanel = () => {
               key={`${panel.title}-${index}`}
               type="button"
               className={`slide ${isActive ? "is-active" : ""}`}
-              style={{
-                "--offset": offset,
-              }}
+              style={{ "--offset": offset }}
               onClick={() => goTo(index)}
               aria-label={`Show slide ${index + 1}: ${panel.title}`}
               aria-current={isActive ? "true" : undefined}
             >
               <div className="slide-image">
-                <img src={panel.img} alt={panel.title} />
+                <img ref={imageRef} src={panel.img} alt={panel.title} />
               </div>
 
               <div className="slide-scrim" />
@@ -355,9 +275,7 @@ const HighlightsPanel = () => {
                 {isActive && (
                   <span
                     className="dot-progress"
-                    style={{
-                      width: `${progress * 100}%`,
-                    }}
+                    style={{ width: `${progress * 100}%` }}
                   />
                 )}
               </span>
