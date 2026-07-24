@@ -20,29 +20,36 @@
 
 .footer-brand {
   max-width: 420px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  background: transparent;
 }
 
-.footer-wordmark {
-  color: #e8e8e3;
+.axe-logo {
+  width: 64px;
+  height: 64px;
 
-  font-family: var(--font-mono);
-  font-size: 2rem;
-  font-weight: 700;
-
-  letter-spacing: -0.05em;
+  display: block;
 }
 
-.footer-wordmark span {
-  color: var(--accent);
+.axe-logo path {
+  fill: var(--accent);
 }
 
 .footer-brand p {
-  margin: 14px 0 0;
+  margin: 0;
 
   color: #777772;
 
   font-family: var(--font-mono);
   font-size: 0.75rem;
+  line-height: 1.5;
 }
 
 .footer-navigation {
