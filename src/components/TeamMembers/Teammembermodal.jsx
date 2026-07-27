@@ -21,7 +21,7 @@ const SOCIAL_ICONS = {
   email: FaEnvelope,
 };
 
-const CLOSE_ANIMATION_MS = 300;
+const CLOSE_ANIMATION_MS = 420;
 
 const Teammembermodal = ({ member, onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
