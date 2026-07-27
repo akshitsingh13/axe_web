@@ -2,6 +2,10 @@
 
 const teamNames = [
   {
+    id: "00",
+    name: "TEAM",
+  },
+  {
     id: "01",
     name: "FRONTEND",
   },

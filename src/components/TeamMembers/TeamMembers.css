@@ -288,6 +288,21 @@
   }
 }
 
+@media (max-width: 768px) {
+  .team-scroll-row {
+    gap: 16px;
+  }
+
+  .team-member-card {
+    flex-basis: 260px;
+
+    width: 260px;
+    min-height: 380px;
+
+    padding: 36px 24px 28px;
+  }
+}
+
 @media (max-width: 640px) {
   .team-member-card {
     flex-basis: 250px;
