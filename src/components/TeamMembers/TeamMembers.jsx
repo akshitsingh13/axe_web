@@ -7,6 +7,7 @@ import teamNames from "../../data/teamNames.js";
 import teamDetail from "../../data/teamDetail.js";
 
 import TeamNav from "./TeamNav.jsx";
+import TeamCarousel from "./TeamCarousel.jsx";
 import Teammembermodal from "./Teammembermodal.jsx";
 
 import "./TeamMembers.css";
@@ -60,7 +61,13 @@ const TeamMembers = () => {
             </div>
           )}
 
-          {activeMembers.length > 0 ? (
+          {activeTeamId === "00" ? (
+            <TeamCarousel
+              key={activeTeamId}
+              members={activeMembers}
+              onSelectMember={setSelectedMember}
+            />
+          ) : activeMembers.length > 0 ? (
             <div
               className="team-scroll-row"
               key={activeTeamId}
