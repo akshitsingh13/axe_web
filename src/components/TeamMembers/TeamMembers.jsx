@@ -81,9 +81,11 @@ const TeamMembers = () => {
                   <div className="team-member-info">
                     <h4>{member.name}</h4>
 
-                    <span>{member.role}</span>
+                    {member.role && <span>{member.role}</span>}
 
-                    <p>{member.shortDescription}</p>
+                    {member.shortDescription && (
+                      <p>{member.shortDescription}</p>
+                    )}
 
                     <div className="team-member-open">View Profile →</div>
                   </div>

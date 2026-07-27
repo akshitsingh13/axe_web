@@ -3,23 +3,27 @@
 const teamNames = [
   {
     id: "01",
-    name: "CORE",
-  },
-  {
-    id: "02",
     name: "FRONTEND",
   },
   {
-    id: "03",
+    id: "02",
     name: "BACKEND",
   },
   {
+    id: "03",
+    name: "DESIGN",
+  },
+  {
     id: "04",
-    name: "AI/ML",
+    name: "MEDIA",
   },
   {
     id: "05",
-    name: "DESIGN",
+    name: "ELECTRONICS",
+  },
+  {
+    id: "06",
+    name: "RESEARCH",
   },
 ];
 

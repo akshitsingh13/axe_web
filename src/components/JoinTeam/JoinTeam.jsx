@@ -15,11 +15,10 @@ const JoinTeam = () => {
       stagger: 0.11,
     },
   );
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+  const JOIN_FORM_URL = "https://forms.gle/AU97LN2aXyb6mFCb7";
+
+  const goToJoinForm = () => {
+    window.open(JOIN_FORM_URL, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -45,7 +44,7 @@ const JoinTeam = () => {
           </p>
         </div>
 
-        <button type="button" className="join-button" onClick={scrollToContact}>
+        <button type="button" className="join-button" onClick={goToJoinForm}>
           Join The Team →
         </button>
       </div>

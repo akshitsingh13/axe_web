@@ -99,21 +99,19 @@ const ContactUs = () => {
           <div className="info-block">
             <div className="info-label">Email</div>
 
-            <div className="info-value">team.axe@college.edu</div>
+            <div className="info-value">axe.nextgen@gmail.com</div>
           </div>
 
-          <div className="info-block">
+          {/* <div className="info-block">
             <div className="info-label">Phone</div>
 
             <div className="info-value">+91 00000 00000</div>
-          </div>
+          </div> */}
 
           <div className="info-block">
             <div className="info-label">College</div>
 
-            <div className="info-value">
-              Your College Name, Department of Engineering
-            </div>
+            <div className="info-value">ADYPU SOE</div>
           </div>
         </div>
 

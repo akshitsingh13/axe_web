@@ -24,10 +24,12 @@ const SOCIAL_ICONS = {
 const CLOSE_ANIMATION_MS = 300;
 
 const Teammembermodal = ({ member, onClose }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
   const closingRef = useRef(false);
   const closeTimerRef = useRef(null);
+  const openFrameRef = useRef(null);
 
   const handleClose = useCallback(() => {
     if (closingRef.current) {
@@ -36,6 +38,7 @@ const Teammembermodal = ({ member, onClose }) => {
 
     closingRef.current = true;
     setIsClosing(true);
+    setIsOpen(false);
 
     closeTimerRef.current = window.setTimeout(() => {
       onClose();
@@ -43,6 +46,13 @@ const Teammembermodal = ({ member, onClose }) => {
   }, [onClose]);
 
   useEffect(() => {
+    // Mount in the "closed" (flipped) state first, then flip open on the
+    // next frame so the transition from rotateY(90deg) -> rotateY(0deg)
+    // actually plays instead of snapping straight to open.
+    openFrameRef.current = window.requestAnimationFrame(() => {
+      setIsOpen(true);
+    });
+
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         handleClose();
@@ -56,6 +66,10 @@ const Teammembermodal = ({ member, onClose }) => {
 
       if (closeTimerRef.current !== null) {
         window.clearTimeout(closeTimerRef.current);
+      }
+
+      if (openFrameRef.current !== null) {
+        window.cancelAnimationFrame(openFrameRef.current);
       }
     };
   }, [handleClose]);
@@ -71,7 +85,7 @@ const Teammembermodal = ({ member, onClose }) => {
   return (
     <div
       className={`member-modal-backdrop ${
-        isClosing ? "is-closing" : "is-open"
+        isClosing ? "is-closing" : isOpen ? "is-open" : "is-entering"
       }`}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
@@ -108,9 +122,11 @@ const Teammembermodal = ({ member, onClose }) => {
 
               <h2 id="member-modal-name">{member.name}</h2>
 
-              <div className="member-modal-role">{member.role}</div>
+              {member.role && (
+                <div className="member-modal-role">{member.role}</div>
+              )}
 
-              <p>{member.longDescription}</p>
+              {member.longDescription && <p>{member.longDescription}</p>}
 
               {member.resumePath && (
                 <div className="member-resume-actions">
@@ -137,58 +153,64 @@ const Teammembermodal = ({ member, onClose }) => {
           </div>
 
           <div className="member-modal-content">
-            <div className="member-modal-section">
-              <h3>Contributions</h3>
+            {member.contributions && member.contributions.length > 0 && (
+              <div className="member-modal-section">
+                <h3>Contributions</h3>
 
-              <ul className="member-contributions">
-                {member.contributions.map((contribution, index) => (
-                  <li key={`${member.id}-contribution-${index}`}>
-                    <span>&gt;</span>
-                    {contribution}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="member-modal-section">
-              <h3>Work</h3>
-
-              <div className="member-work-links">
-                {member.workLinks.map((link, index) => (
-                  <a
-                    key={`${member.id}-work-${index}`}
-                    href={link.src}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {link.label}
-                    <FaExternalLinkAlt aria-hidden="true" />
-                  </a>
-                ))}
+                <ul className="member-contributions">
+                  {member.contributions.map((contribution, index) => (
+                    <li key={`${member.id}-contribution-${index}`}>
+                      <span>&gt;</span>
+                      {contribution}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
+            )}
 
-            <div className="member-modal-section">
-              <h3>Connect</h3>
+            {member.workLinks && member.workLinks.length > 0 && (
+              <div className="member-modal-section">
+                <h3>Work</h3>
 
-              <div className="member-socials">
-                {member.social.map((social, index) => {
-                  const Icon = SOCIAL_ICONS[social.type] ?? FaExternalLinkAlt;
-
-                  return (
+                <div className="member-work-links">
+                  {member.workLinks.map((link, index) => (
                     <a
-                      key={`${member.id}-social-${index}`}
-                      href={getSocialHref(social)}
-                      target={social.type === "email" ? undefined : "_blank"}
-                      rel={social.type === "email" ? undefined : "noreferrer"}
-                      aria-label={social.type}
+                      key={`${member.id}-work-${index}`}
+                      href={link.src}
+                      target="_blank"
+                      rel="noreferrer"
                     >
-                      <Icon aria-hidden="true" />
+                      {link.label}
+                      <FaExternalLinkAlt aria-hidden="true" />
                     </a>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {member.social && member.social.length > 0 && (
+              <div className="member-modal-section">
+                <h3>Connect</h3>
+
+                <div className="member-socials">
+                  {member.social.map((social, index) => {
+                    const Icon = SOCIAL_ICONS[social.type] ?? FaExternalLinkAlt;
+
+                    return (
+                      <a
+                        key={`${member.id}-social-${index}`}
+                        href={getSocialHref(social)}
+                        target={social.type === "email" ? undefined : "_blank"}
+                        rel={social.type === "email" ? undefined : "noreferrer"}
+                        aria-label={social.type}
+                      >
+                        <Icon aria-hidden="true" />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

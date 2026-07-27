@@ -11,7 +11,6 @@ const projects = [
       "One or two lines describing what this project does and the problem it solves.",
     tech: "HTML · Three JS · CSS",
     githubLink: "https://github.com/akshitsingh13/solar-system",
-    liveDemo: "https://akshitsingh13.github.io/solar-system/",
   },
   {
     id: "p-1",
