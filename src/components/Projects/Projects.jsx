@@ -156,6 +156,13 @@ const Projects = () => {
 
               <h3 className="project-title">{project.title}</h3>
 
+              {project.author && (
+                <p className="project-author">
+                  Made by{" "}
+                  <span className="project-author-name">{project.author}</span>
+                </p>
+              )}
+
               <p className="project-description">{project.shortDescription}</p>
 
               <p className="project-tech">{project.tech}</p>
@@ -171,15 +178,17 @@ const Projects = () => {
                   GitHub
                 </a>
 
-                <a
-                  href={project.liveDemo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="project-link"
-                >
-                  <FaExternalLinkAlt aria-hidden="true" />
-                  Live Demo
-                </a>
+                {project.liveDemo && (
+                  <a
+                    href={project.liveDemo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="project-link"
+                  >
+                    <FaExternalLinkAlt aria-hidden="true" />
+                    Live Demo
+                  </a>
+                )}
               </div>
             </div>
           </article>
