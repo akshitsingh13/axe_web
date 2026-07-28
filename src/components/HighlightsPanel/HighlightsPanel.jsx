@@ -10,6 +10,10 @@ import {
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import sihPhoto1 from "../../assets/timeline/sih-photo-1.jpeg";
+import h1 from "../../assets/highlights/highlights-banner-ig.png";
+import h2 from "../../assets/highlights/h2.png";
+import h3 from "../../assets/highlights/h3.png";
+import h4 from "../../assets/highlights/h4.jpeg";
 
 import "./HighlightsPanel.css";
 
@@ -17,24 +21,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PANELS = [
   {
-    title: "Hackathon Win",
+    title: "SIH 2025 Round-1 Cleared",
     img: sihPhoto1,
   },
   {
-    title: "Project Showcase",
-    img: sihPhoto1,
+    title: "Hackathon Win - INNOVYUH 2.0",
+    img: h2,
   },
   {
-    title: "Workshop",
-    img: sihPhoto1,
+    title: "Now hiring",
+    img: h3,
   },
   {
-    title: "Open Source",
-    img: sihPhoto1,
+    title: "NETRA AI PROJECT - Built by Brajesh Kumar",
+    img: h4,
   },
   {
-    title: "Innovation",
-    img: sihPhoto1,
+    title: "Follow our insta page",
+    img: h1,
   },
 ];
 
