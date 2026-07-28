@@ -369,6 +369,11 @@
     width: 90%;
   }
 
+  .slide-image img {
+    object-fit: contain;
+    background: #000000;
+  }
+
   .slide-caption {
     left: 20px;
     right: 20px;
