@@ -1,5 +1,4 @@
 // src/components/JoinTeam/JoinTeam.jsx
-// https://forms.gle/uhTWT5DhaTpcjs1e8
 
 import "./JoinTeam.css";
 import { useRef } from "react";
@@ -10,16 +9,21 @@ const JoinTeam = () => {
 
   useSectionReveal(
     sectionRef,
-    ".join-label, .join-content h2, .join-content p, .join-button",
+    ".join-label, .join-content h2, .join-content p, .join-button, .idea-cta p, .idea-cta-button",
     {
       y: 36,
       stagger: 0.11,
     },
   );
   const JOIN_FORM_URL = "https://forms.gle/AU97LN2aXyb6mFCb7";
+  const IDEA_FORM_URL = "https://forms.gle/uhTWT5DhaTpcjs1e8";
 
   const goToJoinForm = () => {
     window.open(JOIN_FORM_URL, "_blank", "noopener,noreferrer");
+  };
+
+  const goToIdeaForm = () => {
+    window.open(IDEA_FORM_URL, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -47,6 +51,22 @@ const JoinTeam = () => {
 
         <button type="button" className="join-button" onClick={goToJoinForm}>
           Join The Team →
+        </button>
+      </div>
+
+      <div className="idea-cta">
+        <p>
+          Have an idea? Want to build something? Click the button here and fill
+          the form, and we will get back to you!!
+        </p>
+
+        <button
+          type="button"
+          className="idea-cta-button"
+          onClick={goToIdeaForm}
+        >
+          <span>Pitch Your Idea</span>
+          <span className="idea-cta-arrow">→</span>
         </button>
       </div>
     </section>

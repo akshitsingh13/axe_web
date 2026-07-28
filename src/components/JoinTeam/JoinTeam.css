@@ -87,6 +87,108 @@
   outline-offset: 3px;
 }
 
+.idea-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+
+  margin-top: 48px;
+  padding-top: 40px;
+
+  border-top: 1px dashed rgba(232, 232, 227, 0.15);
+}
+
+.idea-cta p {
+  max-width: 620px;
+  margin: 0;
+
+  color: #b6b6b0;
+
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.idea-cta-button {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 16px 24px;
+
+  background: #ffffff;
+  color: #0d0d0d;
+
+  border: 1px solid #ffffff;
+  border-radius: 2px;
+
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.25s ease,
+    box-shadow 0.35s ease;
+}
+
+.idea-cta-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: #0d0d0d;
+
+  transform: translateX(-101%);
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.idea-cta-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.idea-cta-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.idea-cta-button:hover {
+  color: #ffffff;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
+}
+
+.idea-cta-button:hover::before {
+  transform: translateX(0);
+}
+
+.idea-cta-button:hover .idea-cta-arrow {
+  transform: translateX(4px);
+}
+
+.idea-cta-button:active {
+  transform: translateY(0);
+}
+
+.idea-cta-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 @media (max-width: 900px) {
   .section-05 {
     padding: 56px 24px 64px;
@@ -95,5 +197,16 @@
   .join-content {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .idea-cta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .idea-cta-button {
+    width: 100%;
+    justify-content: center;
   }
 }
