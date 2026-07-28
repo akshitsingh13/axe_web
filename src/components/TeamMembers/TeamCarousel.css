@@ -9,12 +9,37 @@
   overflow: hidden;
 }
 
-.team-carousel-card {
+.team-carousel-slot {
   position: absolute;
   top: 50%;
   left: 50%;
 
   width: min(46%, 320px);
+  /* Leave vertical breathing room so the card's float animation has
+     room to bob without its border getting clipped by the stage's
+     overflow: hidden. */
+  height: calc(100% - 28px);
+
+  transform: translate(-50%, -50%) translateX(calc(var(--offset) * 88%))
+    scale(calc(1 - min(abs(var(--offset)), 1) * 0.22));
+
+  filter: brightness(calc(1 - min(abs(var(--offset)), 1) * 0.6))
+    blur(calc(min(abs(var(--offset)), 2) * 0.5px));
+
+  opacity: calc(1 - min(abs(var(--offset)), 2) * 0.32);
+
+  z-index: calc(10 - abs(var(--offset)));
+
+  transition:
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-carousel-card {
+  position: relative;
+
+  width: 100%;
   height: 100%;
 
   margin: 0;
@@ -28,22 +53,29 @@
   overflow: hidden;
   cursor: pointer;
 
-  transform: translate(-50%, -50%) translateX(calc(var(--offset) * 88%))
-    scale(calc(1 - min(abs(var(--offset)), 1) * 0.22));
-
-  filter: brightness(calc(1 - min(abs(var(--offset)), 1) * 0.6))
-    blur(calc(min(abs(var(--offset)), 1) * 1.5px));
-
-  opacity: calc(1 - min(abs(var(--offset)), 2) * 0.32);
-
-  z-index: calc(10 - abs(var(--offset)));
+  /* The card itself floats — a small continuous bob applied directly to
+     the visible card element, not just its contents. Direction/phase set
+     by --wave (alternating -1 / 1) and staggered by the slot's --offset
+     so the row ripples like a gentle wave instead of moving in unison. */
+  animation: team-carousel-float 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--offset) * -0.35s);
 
   transition:
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.4s ease,
     box-shadow 0.4s ease;
+
+  will-change: transform;
+}
+
+@keyframes team-carousel-float {
+  0%,
+  100% {
+    transform: translateY(calc(var(--wave) * -7px));
+  }
+
+  50% {
+    transform: translateY(calc(var(--wave) * 7px));
+  }
 }
 
 .team-carousel-card.is-active {
@@ -51,8 +83,7 @@
 
   box-shadow:
     0 0 0 1px rgba(57, 255, 20, 0.15),
-    0 30px 70px -24px rgba(57, 255, 20, 0.3),
-    0 0 40px -12px rgba(57, 255, 20, 0.25);
+    0 0 24px -8px rgba(57, 255, 20, 0.25);
 
   cursor: pointer;
 }
@@ -223,16 +254,22 @@
   color: #e8e8e3;
 
   font-family: var(--font-mono);
-  font-size: 1.5rem;
   line-height: 1;
 
   cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
 
   transition:
     border-color 0.2s ease,
     color 0.2s ease,
     background 0.2s ease,
     transform 0.2s ease;
+}
+
+.team-carousel-arrow svg {
+  width: 15px;
+  height: 15px;
 }
 
 .team-carousel-arrow:hover {
@@ -243,6 +280,16 @@
   background: rgba(57, 255, 20, 0.08);
 
   transform: translateY(-50%) scale(1.08);
+}
+
+.team-carousel-arrow:active {
+  border-color: var(--accent);
+
+  color: var(--accent);
+
+  background: rgba(57, 255, 20, 0.16);
+
+  transform: translateY(-50%) scale(0.96);
 }
 
 .team-carousel-arrow:focus-visible {
@@ -317,7 +364,7 @@
     height: 380px;
   }
 
-  .team-carousel-card {
+  .team-carousel-slot {
     width: min(60%, 300px);
   }
 
@@ -334,15 +381,18 @@
     margin-bottom: 24px;
   }
 
-  .team-carousel-card {
+  .team-carousel-slot {
     width: min(72%, 280px);
   }
 
   .team-carousel-arrow {
     width: 38px;
     height: 38px;
+  }
 
-    font-size: 1.3rem;
+  .team-carousel-arrow svg {
+    width: 13px;
+    height: 13px;
   }
 
   .team-carousel-arrow-left {
@@ -359,7 +409,7 @@
     height: 300px;
   }
 
-  .team-carousel-card {
+  .team-carousel-slot {
     width: 80%;
   }
 
@@ -369,7 +419,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .team-carousel-slot {
+    transition: none;
+  }
+
   .team-carousel-card {
+    animation: none;
     transition: none;
   }
 }

@@ -1,11 +1,13 @@
 // src/components/TeamMembers/TeamCarousel.jsx
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 import "./TeamCarousel.css";
 
 const TeamCarousel = ({ members, onSelectMember }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(activeIndex);
 
   const goTo = useCallback(
     (index) => {
@@ -17,6 +19,45 @@ const TeamCarousel = ({ members, onSelectMember }) => {
     },
     [members.length],
   );
+
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  // ---------- Press-and-hold continuous scroll ----------
+  // Holding an arrow steps through cards smoothly and repeatedly. A short
+  // initial delay keeps a normal quick click feeling like a single step
+  // (the click handler covers that), then it settles into a steady
+  // repeat interval for continuous movement until released.
+  const holdTimeoutRef = useRef(null);
+  const holdIntervalRef = useRef(null);
+
+  const stopHold = useCallback(() => {
+    if (holdTimeoutRef.current !== null) {
+      clearTimeout(holdTimeoutRef.current);
+      holdTimeoutRef.current = null;
+    }
+
+    if (holdIntervalRef.current !== null) {
+      clearInterval(holdIntervalRef.current);
+      holdIntervalRef.current = null;
+    }
+  }, []);
+
+  const startHold = useCallback(
+    (direction) => {
+      stopHold();
+
+      holdTimeoutRef.current = window.setTimeout(() => {
+        holdIntervalRef.current = window.setInterval(() => {
+          goTo(activeIndexRef.current + direction);
+        }, 420);
+      }, 380);
+    },
+    [goTo, stopHold],
+  );
+
+  useEffect(() => stopHold, [stopHold]);
 
   // Only reset to the first card when the actual set of members changes
   // (e.g. switching tabs) — not on every parent re-render, which would
@@ -78,35 +119,40 @@ const TeamCarousel = ({ members, onSelectMember }) => {
         }
 
         return (
-          <button
-            type="button"
+          <div
             key={member.id}
-            className={`team-carousel-card ${isActive ? "is-active" : ""}`}
+            className="team-carousel-slot"
             style={{ "--offset": offset }}
-            onClick={() => (isActive ? onSelectMember(member) : goTo(index))}
-            aria-label={
-              isActive
-                ? `View ${member.name}'s profile`
-                : `Show ${member.name}'s card`
-            }
-            aria-current={isActive ? "true" : undefined}
           >
-            <div className="team-carousel-image">
-              <img src={member.photoPath} alt={member.name} />
-            </div>
+            <button
+              type="button"
+              className={`team-carousel-card ${isActive ? "is-active" : ""}`}
+              style={{ "--wave": index % 2 === 0 ? -1 : 1 }}
+              onClick={() => (isActive ? onSelectMember(member) : goTo(index))}
+              aria-label={
+                isActive
+                  ? `View ${member.name}'s profile`
+                  : `Show ${member.name}'s card`
+              }
+              aria-current={isActive ? "true" : undefined}
+            >
+              <div className="team-carousel-image">
+                <img src={member.photoPath} alt={member.name} />
+              </div>
 
-            <div className="team-carousel-scrim" />
+              <div className="team-carousel-scrim" />
 
-            <div className="team-carousel-info">
-              <h4>{member.name}</h4>
+              <div className="team-carousel-info">
+                <h4>{member.name}</h4>
 
-              {member.role && <span>{member.role}</span>}
+                {member.role && <span>{member.role}</span>}
 
-              {isActive && (
-                <div className="team-carousel-open">View Profile →</div>
-              )}
-            </div>
-          </button>
+                {isActive && (
+                  <div className="team-carousel-open">View Profile →</div>
+                )}
+              </div>
+            </button>
+          </div>
         );
       })}
 
@@ -114,18 +160,32 @@ const TeamCarousel = ({ members, onSelectMember }) => {
         type="button"
         className="team-carousel-arrow team-carousel-arrow-left"
         onClick={() => goTo(activeIndex - 1)}
+        onPointerDown={(event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+          startHold(-1);
+        }}
+        onPointerUp={stopHold}
+        onPointerLeave={stopHold}
+        onPointerCancel={stopHold}
         aria-label="Previous member"
       >
-        &#8249;
+        <FaChevronLeft aria-hidden="true" />
       </button>
 
       <button
         type="button"
         className="team-carousel-arrow team-carousel-arrow-right"
         onClick={() => goTo(activeIndex + 1)}
+        onPointerDown={(event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+          startHold(1);
+        }}
+        onPointerUp={stopHold}
+        onPointerLeave={stopHold}
+        onPointerCancel={stopHold}
         aria-label="Next member"
       >
-        &#8250;
+        <FaChevronRight aria-hidden="true" />
       </button>
 
       <div className="team-carousel-dots">
