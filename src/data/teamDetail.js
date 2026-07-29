@@ -6,14 +6,15 @@ import { publicAsset } from "../utils/assetPath.js";
 
 const teamDetail = [
   {
-    id: "m-1",
-    team: ["00", "01"],
-    name: "Akshit Singh",
-    role: "Frontend",
-    shortDescription: "Handling the frontend of the team",
+    id: "m-2",
+    team: ["00", "01", "02"],
+    name: "Brajesh Kumar",
+    role: "Team Leader & Founder",
+    shortDescription:
+      "Founder of Team AXE, building a culture where innovation meets execution—creating technology that solves real-world problems and leaves a lasting impact beyond the college.",
     longDescription:
       "Akshit leads the frontend architecture for the team, turning designs into fast, accessible interfaces. He focuses on component reusability and keeping the codebase clean as the product scales.",
-    photoPath: akshitPhoto,
+    photoPath: defaultPhoto,
     // resumePath: publicAsset("documents/AXE.pdf"),
     contributions: [
       "Built the component library used across all team pages",
@@ -55,14 +56,14 @@ const teamDetail = [
   },
 
   {
-    id: "m-2",
-    team: ["00", "01", "02"],
-    name: "Brajesh Kumar",
-    role: "Frontend + Backend",
+    id: "m-1",
+    team: ["00", "01"],
+    name: "Akshit Singh",
+    role: "Frontend",
     shortDescription: "Handling the frontend of the team",
     longDescription:
       "Akshit leads the frontend architecture for the team, turning designs into fast, accessible interfaces. He focuses on component reusability and keeping the codebase clean as the product scales.",
-    photoPath: defaultPhoto,
+    photoPath: akshitPhoto,
     // resumePath: publicAsset("documents/AXE.pdf"),
     contributions: [
       "Built the component library used across all team pages",
@@ -154,7 +155,7 @@ const teamDetail = [
 
   {
     id: "m-4",
-    team: ["00", "03", "04"],
+    team: ["00", "03"],
     name: "Sneha Kumari",
     role: "Design + Media",
     shortDescription: "Handling the frontend of the team",

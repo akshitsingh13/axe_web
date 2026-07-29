@@ -15,11 +15,7 @@ const teamNames = [
   },
   {
     id: "03",
-    name: "DESIGN",
-  },
-  {
-    id: "04",
-    name: "MEDIA",
+    name: "DESIGN & MEDIA",
   },
   {
     id: "05",
