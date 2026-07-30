@@ -126,6 +126,12 @@ const Teammembermodal = ({ member, onClose }) => {
                 <div className="member-modal-role">{member.role}</div>
               )}
 
+              {member.shortDescription && (
+                <p className="member-modal-short-description">
+                  {member.shortDescription}
+                </p>
+              )}
+
               {member.longDescription && <p>{member.longDescription}</p>}
 
               {member.resumePath && (

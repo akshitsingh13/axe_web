@@ -176,6 +176,16 @@
   text-transform: uppercase;
 }
 
+.member-modal-short-description {
+  margin: 0 0 10px;
+
+  color: #a3a39d;
+
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 .member-modal-role {
   color: var(--accent);
 
@@ -188,11 +198,36 @@
 .member-modal-intro p {
   margin: 24px 0;
 
+  max-height: 220px;
+  overflow-y: auto;
+
+  padding-right: 8px;
+
   color: #a3a39d;
 
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.7;
+
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a3a transparent;
+}
+
+.member-modal-intro p::-webkit-scrollbar {
+  width: 6px;
+}
+
+.member-modal-intro p::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.member-modal-intro p::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 3px;
+}
+
+.member-modal-intro p::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .member-resume-actions {
